@@ -1,0 +1,601 @@
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+
+body {
+    width: 1503px;
+    height: 890px;
+    margin: 0;
+    padding: 0;
+    font-family: 'Montserrat', sans-serif;
+    
+}
+input{
+  font-family: 'Montserrat', sans-serif;
+}
+select{
+  font-family: 'Montserrat', sans-serif;
+}
+button{
+  font-family: 'Montserrat', sans-serif;
+}
+
+ul {
+  padding-left: 0;
+}
+
+a {
+  text-decoration: underline;
+}
+
+button, a {
+  cursor: pointer;
+}
+
+button, button:focus {
+  border: none;
+  outline: none;
+}
+
+
+div::-webkit-scrollbar-track
+{
+  background-color: transparent;
+  width: 12px;
+}
+
+div::-webkit-scrollbar
+{
+  width: 10px;
+  margin: 0px 1px;
+	background-color: #F5F5F5;
+}
+
+div::-webkit-scrollbar-thumb
+{
+	background-color: #83838d;
+	border-radius: 10px;
+}
+
+.italic {
+  font-style: italic;
+}
+
+.hide {
+  display: none;
+}
+
+.center {
+  text-align: center;
+  margin: 0 auto;
+}
+
+.container {
+  width: 50%;
+  height: 70%;
+  position: relative;
+  font-family: 'Montserrat', sans-serif;
+  color: #555;
+  float: left;
+
+  -webkit-box-shadow: 0px 0px 0px 1px #dddddd;
+  box-shadow: 0px 0px 0px 1px #dddddd;
+}
+.bottomContainer {
+    width: 100%;
+    height: 30%;
+    float: left;
+    background-color: #eeeeee;
+
+    -webkit-box-shadow: 0px 0px 0px 1px #dddddd;
+    box-shadow: 0px 0px 0px 1px #dddddd;
+}
+.influencerListList {
+    height: 50px;
+    width: 260px;
+    margin: 10px;
+    font-size: 16px;    
+    text-transform: capitalize;
+
+}
+.influencerCreateListTextbox {
+    width: 150px;
+    margin-left: 10px;
+    height: calc(20% - 20px);
+    padding-left: 5px;
+}
+.influencerCreateListButton, .influencerDeleteListButton {
+    width: 40px;
+    height: calc(20% - 20px);
+    margin-left: 5px;
+    background-color: #cccccc;
+}
+.influencerAddToListButton, .influencerRemoveFromListButton {
+    width: 100%;
+    height: calc(20% - 20px);
+}
+#influencerListDiv {
+    width: calc(100% - 160px - 300px); height: 100%; float: left;
+    overflow-y: scroll;
+}
+.greyBGHover:hover {
+    background-color: #dddddd;
+}
+
+.bigButton {
+	display: block;
+	width: calc(100% - 20px);
+	height: 40px;
+	line-height: 40px;
+  overflow: hidden;
+  background-color: #cccccc;
+  margin: 10px;
+}
+.bigButton:hover{
+  background-color: #dddddd;
+}
+
+webview {
+  border: none;         /* Reset default border */
+  height: 100%;        /* Viewport-relative units */
+  width: 100%;
+}
+
+.views {
+    width: 640px;
+    height: 750px;
+}
+
+.settings {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: url(../img/user.png);
+  background-repeat: no-repeat;
+  background-size: 35px;
+  background-position: center;
+  width: 35px;
+  height: 35px;
+  outline: none;
+  border-radius: 50%;
+}
+
+.dropdown {
+  position: absolute;
+  top: 50px;
+  right: 35px;
+  border: 1px solid #eee;
+  padding: 20px 0 20px 0;
+  background: white;
+  border-radius: 5px;
+  z-index: 2;
+  display: none;
+}
+
+.dropdown.active {
+  display: block;
+}
+
+.dropdown .item {
+  padding: 10px 15px;
+  text-align: center;
+  font-size: 11px;
+  color: #666;
+  cursor: pointer;
+  border-bottom: 1px #efefef solid;
+}
+
+.thumb {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.chat-list, .chat {
+  display: inline-block;
+}
+
+.chat-list {
+  width: 40%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  overflow: scroll;
+  overflow-x: hidden;
+}
+
+.chat-list input[name=search] {
+  margin: 0 auto;
+  margin-top: 0px;
+  height: 20px;
+  width: 92%;
+  font-size: 14px;
+  border-radius: 3px;
+  padding: 10px;
+  display: block;
+  outline: none;
+  border: 1px #ccc solid;
+}
+
+.chat-list .search-header {
+  width: 84%;
+  background: #fff;
+  height: auto;
+  margin: 10px;
+  z-index: 2;
+}
+
+.chat-list ul {
+  padding-top: 0px;
+}
+
+.chat-list li {
+  list-style: none;
+  padding: 15px;
+  border-bottom: 1px #efefef solid;
+  vertical-align: middle;
+  cursor: pointer;
+}
+
+.chat-list li:hover, .chat-list li.active, .dropdown .item:hover {
+  background: #efefef;
+}
+
+.chat-list li .username {
+  vertical-align: top;
+  margin-left: 10px;
+  font-size: 14px;
+}
+
+.chat-list li.notification:after {
+  content: '1';
+  position: absolute;
+  right: 30px;
+  width: 15px;
+  height: 15px;
+  padding: 3px;
+  font-size: 13px;
+  text-align: center;
+  border-radius: 50%;
+  background: rgb(22, 139, 249);
+  color: #fff;
+}
+
+.chat-list div {
+  display: inline-block;
+}
+
+.chat {
+  padding: 15px;
+  width: calc(60% - 30px);
+  margin-left: 40%;
+}
+
+.chat-title {
+  padding: 10px;
+  min-height: 15px;
+}
+
+.chat-title b:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.messages {
+  height: 450px;
+  overflow: scroll;
+  overflow-x: hidden;
+  background: #efefef;
+  padding: 20px 10px 0px 10px;
+  border: 1px #efefef solid;
+}
+
+.messages .cover img {
+  margin: 10px auto;
+  opacity: 0.5;
+}
+
+.chat .message {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.chat .message .content {
+  display: block;
+  padding: 7px 7px 2px 7px;
+  max-width: 200px;
+  border-radius: 8px;
+  text-align: left;
+  position: relative;
+  word-wrap: break-word;
+  white-space: pre-line;
+}
+
+.chat .message .content img {
+  max-width: 100%;
+}
+
+.chat .message .content .post-caption, .chat .message .content a {
+  font-size: 12px;
+  color: #666;
+}
+
+.message.outward .content {
+  background: rgb(22, 139, 249);
+  color: #efefef;
+  font-weight: 200;
+  float: right;
+  width: 100%;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.message.inward .content{
+  float: left;
+  width: 100%;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.message.inward .content, .message.inward .content.ig-media, .message.outward .content.ig-media {
+  background: #fff;
+  color: #666;
+}
+
+.message .content:after {
+  content: ' ';
+  position: absolute;
+  width: 0;
+  height: 0;
+  top: 0px;
+  bottom: auto;
+  border: 10px solid;
+}
+
+.message.inward .content:after{
+  left: -10px;
+  right: auto;
+  border-color: #fff transparent transparent transparent;
+}
+
+.message.outward .content:after {
+  left: auto;
+  right: -10px;
+  border-color: rgb(22, 139, 249) transparent transparent rgb(22, 139, 249);
+}
+
+.message.outward .content.ig-media:after{
+  border-color: #fff transparent transparent #fff;
+}
+
+.message.outward .content:not(.ig-media) a.link-in-message {
+  color: white;
+}
+
+.message.inward .content a.link-in-message {
+  color: rgb(22, 139, 249);
+}
+
+.message-time {
+  font-size: 10px;
+  text-align: right;
+  margin-top: 0;
+  margin-bottom: 5px;
+}
+
+.message-sender {
+  font-size: 10px;
+  margin-top: 0;
+  margin-bottom: 6px;
+}
+
+.seen {
+  text-align: right;
+  color: #aaa;
+  font-size: 14px;
+  float: right;
+  width: 100%;
+}
+
+
+.new-message {
+  position: absolute;
+  bottom: 5px;
+  width: calc(60% - 40px);
+}
+
+.new-message textarea, .new-message textarea:focus {
+  outline: none;
+  font-size: 17px;
+  color: #555;
+  padding: 15px 10px 10px 10px;
+  padding-right: 0%;
+  width: 100%;
+  word-wrap: break-word;
+  height: 50px;
+  border: 1px #aaa solid;
+  resize: none;
+}
+
+.viewer {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  min-height: 100vh;
+  background: white;
+  z-index: 3;
+  display: none;
+}
+
+.viewer.active {
+  display: block;
+  animation-name: fadeIn;
+  animation-duration: 0.4s;
+  animation-timing-function: ease-out;
+}
+
+.viewer .content img, .viewer .content video {
+  display: block;
+  margin: 0 auto;
+  margin-top: 50px;
+}
+
+.viewer .content img {
+  max-width: 55%;
+}
+
+.viewer button.close {
+  background: transparent;
+  opacity: 0.5;
+}
+
+.viewer .post-caption {
+  margin: 10px auto;
+  max-width: 250px;
+  word-wrap: break-word;
+  font-size: 15px;
+}
+
+.unfollowers {
+  text-align: center;
+}
+
+.unfollowers li {
+  display: inline-block;
+  width: 20%;
+  text-align: center;
+  padding: 10px;
+  border-bottom: 1px #efefef solid;
+}
+
+.unfollow-button {
+  padding: 8px;
+  color: rgb(22, 139, 249);
+  background: white;
+}
+
+.unfollow-button:hover {
+  text-decoration: underline;
+}
+
+.view-on-ig {
+  background: rgb(22, 139, 249);
+  color: white;
+  border: 1px rgb(22, 139, 249) solid;
+  outline: none;
+  padding: 8px;
+  border-radius: 3px;
+  cursor: pointer;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  font-size: 13px;
+  transition: all .2s ease-out .1s;
+}
+
+.view-on-ig:hover {
+  opacity: 0.8;
+}
+
+.open-emoji, .open-emoji:focus, .send-attachment, .send-attachment:focus {
+  background: none;
+  position: absolute;
+  font-size: 25px;
+  bottom: 40px;
+  opacity: 0.5;
+}
+
+ .send-attachment {
+   right: 50px;
+ }
+
+/**********************************
+EMOJIS
+***********************************/
+
+@keyframes slideUp {
+  from {
+    transform: translateY(200px);
+  }
+
+  to {
+    transform: translateY(0px);
+  }
+}
+
+.open-emoji {
+  right: 20px;
+}
+
+.emojis {
+  width: 400px;
+  height: 400px;
+  position: absolute;
+  bottom: 130px;
+  right: 25px;
+  background: white;
+  border: 1px #efefef solid;
+  z-index: 5;
+}
+
+
+.emojis-header {
+  width: 100%;
+  padding: 3px;
+  border-bottom: 1px #efefef solid;
+  overflow-x: scroll;
+}
+
+.emojis-header div {
+  display: inline-block;
+  font-size: 25px;
+  padding: 5px;
+  cursor: pointer;
+  margin: 0 10px;
+}
+
+.emojis-body {
+  height: 300px;
+  overflow-y: scroll;
+  word-wrap: break-word;
+  padding: 10px 10px;
+  margin-bottom: 10px;
+}
+
+.emojis-body .emoji {
+  font-size: 20px;
+  margin: 3px 3px;
+  cursor: pointer;
+}
+
+/******************************
+CAROUSEL
+******************************/
+
+.carousel-left, .carousel-right {
+  position: absolute;
+  padding: 40px;
+  top: 200px;
+  opacity: 0.2;
+}
+
+.carousel-left {
+  left: 0;
+  background: url(../img/chevron-left.png) no-repeat center;
+  background-size: 30px;
+}
+
+.carousel-right {
+  right: 0;
+  background: url(../img/chevron-right.png) no-repeat center;
+  background-size: 30px;
+}

@@ -1,0 +1,56 @@
+{
+  "name": "IG-Influencer-Manager",
+  "version": "1.12.0",
+  "description": "App for managing IG Influencers",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "pack": "build --dir",
+    "dist": "build --win --x64"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gnomgrol/IG-Influencer-Manager"
+  },
+  "keywords": [
+    "Instagram",
+    "Influencer",
+    "Manager"
+  ],
+  "author": "gnomgrol",
+  "license": "MIT",
+  "dependencies": {
+    "bluebird": "^3.5.0",
+    "electron-log": "^2.2.6",
+    "electron-store": "^1.3.0",
+    "electron-tabs": "^0.9.0",
+    "electron-updater": "^2.18.2",
+    "fb": "^2.0.0",
+    "instagram-private-api": "github:huttarichard/instagram-private-api#66ab6c4293daac88dba18333c641889299145316",
+    "node-notifier": "^5.1.2",
+    "nojs": "^0.1.1"
+  },
+  "devDependencies": {
+    "electron": "^1.7.8",
+    "electron-builder": "^19.27.3"
+  },
+  "build": {
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "gnomgrol",
+        "repo": "igdm"
+      }
+    ],
+    "appId": "com.gnomgrol.desktop.IG-Influencer-Manager",
+    "copyright": "gnomgrol 2018",
+    "asar": false,
+    "mac": {
+      "category": "public.app-category.social-networking"
+    },
+    "win": {
+      "target": "nsis",
+      "publisherName": "gnomgrol"
+    }
+  }
+}

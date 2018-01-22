@@ -1,0 +1,117 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Desktop IG:dm</title>
+    
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="css/electrontabs.css">
+    <script>window.$ = window.jQuery = require('./js/jquery-3.2.1.min.js');</script>
+
+
+  </head>
+  <body no-js on-click-remove-class=".dropdown active">
+
+      
+    <div class="container">        
+        <!-- <webview id="view" class="page" src="http://www.instagram.com/" autosize="on" preload="./preload.js"></webview> -->
+
+        <div class="etabs-tabgroup">
+          <div class="etabs-tabs"></div>
+          <div class="etabs-buttons"></div>
+        </div>
+        <div class="etabs-views" style="height: calc(100% - 32px)"></div>
+      
+    </div>
+
+    <div class="container">
+      <button class="settings" no-js on-mouseenter-add-class=".dropdown active"></button>
+
+
+      <div class="dropdown" no-js on-mouseleave-remove-class=".dropdown active">
+        <div class="item" id="seen-flagger"
+          title="you would know when recipients read your message, but they won't know when your read theirs.'">
+          DONT SEND "SEEN" RECEIPTS
+        </div>
+        <div class="item" id="unfollowers">USERS NOT FOLLOWING BACK</div>
+        <div class="item" id="showfullchat">SHOW FULL CHAT</div>
+        <div class="item" id="logout">LOGOUT</div>
+      </div>
+
+
+      <div class="chat-list">
+        <div class="search-header">
+          <input id="userSearchBar" type="text" name="search" placeholder="Search IG Users">
+        </div>
+        <ul></ul>
+      </div>
+
+
+      <div class="chat">
+        <div class="chat-title"></div>
+        <div class="messages">
+          <div class="center cover">
+            <img src="img/icon.png" width="300px">
+            <p class="italic">Search and select a chat to start.</p>
+          </div>
+        </div>
+
+        <div class="new-message">
+          <form>
+            <textarea placeholder="Message"></textarea>
+          </form>
+        </div>
+
+        <button class="send-attachment">
+          <img src="img/attachment.png" width="20px">
+        </button>
+        <input type="file" accept="image/jpeg,image/jpg" class="file-input hide">
+        <button class="open-emoji" no-js on-click-toggle-class=".emojis hide">
+          <img src="img/smiley.png" width="20px">
+        </button>
+
+        <div class="emojis hide">
+          <div class="emojis-header"></div>
+          <div class="emojis-body"></div>
+        </div>
+      </div>
+
+
+      <div class="viewer">
+        <button class="close" no-js on-click-remove-class=".viewer active">
+          <img width="25px" src="img/close.png" alt="close icon">
+        </button>
+        <div class="content"></div>
+      </div>
+
+
+    </div>
+
+
+    <div class="bottomContainer">
+        <div style="width: 280px; height: 100%; float: left;">
+            <select class="influencerListList" id="influencerListList"></select>
+            <input class="influencerCreateListTextbox" placeholder="New List Name..." />
+            <button class="influencerCreateListButton greyBGHover">New</button>
+            <button class="influencerDeleteListButton greyBGHover">Del</button>
+            <button class="influencerAddToListButton bigButton">Add To List</button>
+            <button class="influencerRemoveFromListButton bigButton">Remove From List</button>
+        </div>
+        <div id="influencerListDiv">
+        
+        </div>
+    </div>
+
+
+  </body>
+  
+  <!-- <script type="text/javascript" src="../node_modules/nojs/dist/no.min.js"></script>-->
+  <script src="http://nojs.io/release/0.1.1/no.min.js"></script>
+  <script type="text/javascript" src="js/globals.js"></script>
+  <script type="text/javascript" src="js/emoji.js"></script>
+  <script type="text/javascript" src="js/carousel.js"></script>
+  <script type="text/javascript" src="js/funcs.js"></script>
+  <script type="text/javascript" src="js/renderers.js"></script>
+  <script type="text/javascript" src="js/index.js"></script>
+</html>
