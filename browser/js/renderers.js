@@ -165,7 +165,13 @@ onload = () => {
         var username = webview.src.substring(webview.src.search(".com/") + ".com/".length);
         username = username.replace("/", "");
 
-        var sortedKeys = Object.keys(window.influencerData).sort(function(a,b){return window.influencerData[b].rating-window.influencerData[a].rating})
+        var sortedKeys = Object.keys(window.influencerData).sort(function(a,b){
+          if(window.influencerData[b].rating == window.influencerData[a].rating){
+            return parseInt(window.influencerData[b].followerCount) - parseInt(window.influencerData[a].followerCount);
+          }else{
+            return window.influencerData[b].rating-window.influencerData[a].rating;
+          }
+        })
 
         $.each(sortedKeys, function(index, key){
             var value = window.influencerData[key];
@@ -174,8 +180,12 @@ onload = () => {
                 var cost = value.costPP;
                 if(cost.length > 0){cost = " - $" + cost;}
                 var followers = value.followerCount;
-                if(parseInt(value.followerCount) > 10000){followers = "Followers: " + Math.ceil(followers/1000) + "k";}
-                if(value.engagement != undefined){ followers = followers + " - "; }
+                if(parseInt(value.followerCount) > 10000){
+                  followers = "Followers: <span style='color: #218935;'>" + Math.ceil(followers/1000) + "k</span>";
+                }else{
+                  followers = "Followers: <span style='color: #218935;'>" + followers + "</span>";
+                }
+                if(value.engagement != undefined){ followers = followers + " - " + value.engagement; }
 
 
                 var li = document.createElement('div');
@@ -188,7 +198,7 @@ onload = () => {
                 li.style.marginBottom = "0px";
                 li.style.padding = "10px";
                 li.appendChild(dom(`<img style="margin-right: 10px; float: left;" class="thumb" src="${value.imgURL}">`));
-                li.appendChild(dom(`<p style="margin: 0; float: left; max-width: 160px; overflow: hidden; text-overflow: ellipsis;">${value.name}<br><span style='font-size: 12px;'>${rating}${cost}<br/>${followers}${value.engagement}</span></p>`));
+                li.appendChild(dom(`<p style="margin: 0; float: left; max-width: 160px; overflow: hidden; text-overflow: ellipsis;">${value.name}<br><span style='font-size: 12px;'>${rating}${cost}<br/>${followers}</span></p>`));
                 li.style.border = "1px solid transparent";
                 li.classList.add("greyBGHover");
 
