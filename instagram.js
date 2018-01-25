@@ -33,7 +33,7 @@ exports.logout = function () {
 
 exports.getChatList = function (session) {
   return new Promise((resolve, reject) => {
-    var feed = new Client.Feed.Inbox(session, 20);
+    var feed = new Client.Feed.Inbox(session, 500);
     feed.all().then(resolve).catch(reject)
   })
 }

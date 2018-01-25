@@ -8,7 +8,34 @@ let tabGroup = new TabGroup();
 let webview = undefined;
 
 onload = () => {
-        
+
+    // FOR COLOR CODING INFLUENCERS
+    var getColorForPercentage = function(pct, alpha) {
+      if(alpha == undefined){alpha = 1.0;}
+      var percentColors = [
+        { pct: 0.0, color: { r: 0xff, g: 0x00, b: 0 } },
+        { pct: 0.5, color: { r: 0xff, g: 0xff, b: 0 } },
+        { pct: 1.0, color: { r: 0x00, g: 0xff, b: 0 } } ];
+
+        for (var i = 1; i < percentColors.length - 1; i++) {
+            if (pct < percentColors[i].pct) {
+                break;
+            }
+        }
+        var lower = percentColors[i - 1];
+        var upper = percentColors[i];
+        var range = upper.pct - lower.pct;
+        var rangePct = (pct - lower.pct) / range;
+        var pctLower = 1 - rangePct;
+        var pctUpper = rangePct;
+        var color = {
+            r: Math.floor(lower.color.r * pctLower + upper.color.r * pctUpper),
+            g: Math.floor(lower.color.g * pctLower + upper.color.g * pctUpper),
+            b: Math.floor(lower.color.b * pctLower + upper.color.b * pctUpper)
+        };
+        return 'rgba(' + [color.r, color.g, color.b].join(',') + ',' + alpha + ')';
+    }
+
     var Influencer = function (name, listID, imgURL, rating, costPP, views, sales, followerCount, engagement) {  
         this.name = name;
         this.listID = listID;
@@ -34,6 +61,32 @@ onload = () => {
     webview = maintab.webview;
     
 
+    var spinText = function (spun) {
+      var SPINTAX_PATTERN = /\{[^"\r\n\}]*\}/;
+      var match;
+      while (match = spun.match(SPINTAX_PATTERN)) {
+       match = match[0];
+       var candidates = match.substring(1, match.length - 1).split("|");
+       spun = spun.replace(match, candidates[Math.floor(Math.random() * candidates.length)])
+      }
+      return spun;
+    }
+
+    // BIND SPINTAX AREA AND BUTTON
+    $("#spintaxSendButton").on("click", function(){
+      var text = $("#spintaxArea").val();
+      text = spinText(text);
+      $("#messageTextBox").val(text);
+    });
+
+    $("#spintaxArea").on("input change paste", function(){
+      var text = $("#spintaxArea").val();
+      storage.set("spintax", text);
+    });
+
+    if(storage.has("spintax")){
+      $("#spintaxArea").val(storage.get('spintax'));
+    }
 
     // UPDATE INFLUENCER DATA
     function updateInfluencer (name, listID, imgURL, rating, costPP, views, sales, followerCount, engagement) {
@@ -138,21 +191,21 @@ onload = () => {
 
     function TextFromRating(rating){
       if(rating == 0){
-        return "Not Rated Yet";
-      }else if(rating == 1){
-        return "Useless/Botted/Idiot";
-      }else if(rating == 2){
-        return "Page was Overused";
-      }else if(rating == 3){
         return "Watching Page";
+      }else if(rating == 1){
+        return "Waiting For Reply";
+      }else if(rating == 2){
+        return "Useless, Dont Use";
+      }else if(rating == 3){
+        return "Shitty, Cheap";
       }else if(rating == 4){
-        return "Needs More Testing";
+        return "Decent, Expensive";
       }else if(rating == 5){
         return "Breaks About Even";
       }else if(rating == 6){
         return "Good First Posts";
       }else if(rating == 7){
-        return "Perfect, Use Often";
+        return "Perfect";
       }
     }
 
@@ -181,9 +234,9 @@ onload = () => {
                 if(cost.length > 0){cost = " - $" + cost;}
                 var followers = value.followerCount;
                 if(parseInt(value.followerCount) > 10000){
-                  followers = "Followers: <span style='color: #218935;'>" + Math.ceil(followers/1000) + "k</span>";
+                  followers = "<span style=''>" + Math.ceil(followers/1000) + "k</span>";
                 }else{
-                  followers = "Followers: <span style='color: #218935;'>" + followers + "</span>";
+                  followers = "<span style=''>" + followers + "</span>";
                 }
                 if(value.engagement != undefined){ followers = followers + " - " + value.engagement; }
 
@@ -197,15 +250,17 @@ onload = () => {
                 li.style.margin = "5px";
                 li.style.marginBottom = "0px";
                 li.style.padding = "10px";
+                li.style.borderRadius = "10px";
+                li.style.backgroundColor = getColorForPercentage(value.rating / 7, 0.35);
                 li.appendChild(dom(`<img style="margin-right: 10px; float: left;" class="thumb" src="${value.imgURL}">`));
                 li.appendChild(dom(`<p style="margin: 0; float: left; max-width: 160px; overflow: hidden; text-overflow: ellipsis;">${value.name}<br><span style='font-size: 12px;'>${rating}${cost}<br/>${followers}</span></p>`));
                 li.style.border = "1px solid transparent";
                 li.classList.add("greyBGHover");
 
                 if(username.length > 2 && username == value.name){
-                    li.style.borderBottom = "1px solid #dd3322";
+                    li.style.border = "1px solid #111111";
                 }else{
-                    li.style.borderBottom = "1px solid #dddddd";
+                    li.style.border = "1px solid #dddddd";
                 }
 
                 li.onclick = () => {
@@ -241,17 +296,17 @@ onload = () => {
       // OPEN NEW TAB IN NEW TAB
       webv.addEventListener('new-window', (event) => {
         event.preventDefault()
-		var newTitle = event.url.substr(event.url.indexOf(".com") + 4)
-		if(newTitle.indexOf("/") > -1){
-			newTitle = newTitle.substr(0, newTitle.indexOf("/"))
-		}
+
         let newtab = tabGroup.addTab({
-          title: newTitle,
+          title: "",
           src: event.url,
           visible: true,
           webviewAttributes: {
             preload: path.join(__dirname, 'preload.js'),
           }
+        });
+        newtab.on("close", (tab) => {
+          tabGroup.getTabByPosition(-1).activate();
         });
 
         AddWebviewCallbacks(newtab.webview)

@@ -28,7 +28,9 @@ select{
 button{
   font-family: 'Montserrat', sans-serif;
 }
-
+textarea{
+  font-family: 'Montserrat', sans-serif;
+}
 ul {
   padding-left: 0;
 }
@@ -65,6 +67,26 @@ div::-webkit-scrollbar-thumb
 	background-color: #83838d;
 	border-radius: 10px;
 }
+
+textarea::-webkit-scrollbar-track
+{
+  background-color: transparent;
+  width: 12px;
+}
+
+textarea::-webkit-scrollbar
+{
+  width: 10px;
+  margin: 0px 1px;
+	background-color: #F5F5F5;
+}
+
+textarea::-webkit-scrollbar-thumb
+{
+	background-color: #83838d;
+	border-radius: 10px;
+}
+
 
 .italic {
   font-style: italic;
@@ -128,7 +150,7 @@ div::-webkit-scrollbar-thumb
     overflow-y: scroll;
 }
 .greyBGHover:hover {
-    background-color: #dddddd;
+    background-color: #bbbbbb !important;
 }
 
 .bigButton {
@@ -411,18 +433,17 @@ webview {
 .new-message {
   position: absolute;
   bottom: 5px;
-  width: calc(60% - 40px);
+  width: calc(60% - 90px);
 }
 
 .new-message textarea, .new-message textarea:focus {
   outline: none;
   font-size: 17px;
   color: #555;
-  padding: 15px 10px 10px 10px;
-  padding-right: 0%;
+  padding: 10px;
   width: 100%;
   word-wrap: break-word;
-  height: 50px;
+  height: 60px;
   border: 1px #aaa solid;
   resize: none;
 }
@@ -510,12 +531,13 @@ webview {
   background: none;
   position: absolute;
   font-size: 25px;
-  bottom: 40px;
+  bottom: 50px;
   opacity: 0.5;
 }
 
- .send-attachment {
-   right: 50px;
+ .send-attachment, .send-attachment:focus {
+   right: 20px;
+   bottom: 15px;
  }
 
 /**********************************
@@ -577,6 +599,29 @@ EMOJIS
   cursor: pointer;
 }
 
+.spintaxDiv{
+  float: left;
+  width: 170px;
+  height: 250px;
+  padding: 5px;
+  margin: 0px;
+}
+
+#spintaxArea{
+  width: 160px;
+  height: 200px;
+  padding: 5px;
+  margin: 0px;
+  line-height: 20px;
+  resize: none;
+}
+
+#spintaxSendButton{
+  width: 170px;
+  height: 30px;
+  margin: 0px;
+  margin-top: 5px;
+}
 /******************************
 CAROUSEL
 ******************************/
@@ -599,3 +644,4 @@ CAROUSEL
   background: url(../img/chevron-right.png) no-repeat center;
   background-size: 30px;
 }
+

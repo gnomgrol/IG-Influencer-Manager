@@ -16,36 +16,40 @@ var Influencer = function (name, listID, imgURL, rating, costPP, views, sales, f
 
 const {ipcRenderer} = require('electron')
 
+
+function onValueChange(){
+    var name = window.location.href.substring(window.location.href.search(".com/") + ".com/".length);
+    name = name.replace("/", "");
+
+    var data = document.documentElement.innerHTML;
+    var imgURL = data.substring(data.search("<img class=\"_9bt3u\" src=\"") + "<img class=\"_9bt3u\" src=\"".length); 
+    imgURL = imgURL.substring(0, imgURL.search("\"") + 1);
+
+    var followerCount = data.substring(data.search("<span class=\"_fd86t\" title=\"") + "<span class=\"_fd86t\" title=\"".length);
+    followerCount = followerCount.substring(0, followerCount.search("\"")).replaceAll(",", "").replaceAll(".", "");
+
+    var engagement = $("#engagementLabel").html();
+    engagement = engagement.substring(engagement.search("1b\">") + "1b\">".length);
+    engagement = engagement.substring(0, engagement.search("</b>"));
+
+    var rating = $("#ratingDropDown").val();
+    var views = $("#viewsTextBox").val();
+    var sales = $("#salesTextBox").val();
+    var costPP = $("#costPPTextBox").val();
+    ipcRenderer.sendToHost({type: "updateInfluencer", data: new Influencer(name, "", imgURL, rating, costPP, views, sales, followerCount, engagement)});
+}
+
+
 function LoadJQ(){
     //inject jquery to page
     window.$ = window.jQuery = require('./js/jquery-3.2.1.min.js');
 
-    $("#updateInfluencerButton").off();
-    $(document).off("click", "#updateInfluencerButton").on("click", "#updateInfluencerButton", function(){
-        var name = window.location.href.substring(window.location.href.search(".com/") + ".com/".length);
-        name = name.replace("/", "");
-
-        var data = document.documentElement.innerHTML;
-        var imgURL = data.substring(data.search("<img class=\"_9bt3u\" src=\"") + "<img class=\"_9bt3u\" src=\"".length); 
-        imgURL = imgURL.substring(0, imgURL.search("\"") + 1);
-
-        var followerCount = data.substring(data.search("<span class=\"_fd86t\" title=\"") + "<span class=\"_fd86t\" title=\"".length);
-        followerCount = followerCount.substring(0, followerCount.search("\"")).replaceAll(",", "").replaceAll(".", "");
-
-        var engagement = $("#engagementLabel").html();
-        engagement = engagement.substring(engagement.search("1b\">") + "1b\">".length);
-        engagement = engagement.substring(0, engagement.search("</b>"));
-
-        var rating = $("#ratingDropDown").val();
-        var views = $("#viewsTextBox").val();
-        var sales = $("#salesTextBox").val();
-        var costPP = $("#costPPTextBox").val();
-        ipcRenderer.sendToHost({type: "updateInfluencer", data: new Influencer(name, "", imgURL, rating, costPP, views, sales, followerCount, engagement)});
-            
-        
+    $(".dataFieldNum").off();
+    $(document).off("change input paste", ".dataFieldNum").on("change input paste", ".dataFieldNum", function(){
+        onValueChange();
     });
         
-    $("#openChatButton").off();
+    /*$("#openChatButton").off();
     $(document).off("click", "#openChatButton").on("click", "#openChatButton", function(event){
         var name = window.location.href.substring(window.location.href.search(".com/") + ".com/".length);
         name = name.replace("/", "");
@@ -54,7 +58,7 @@ function LoadJQ(){
         $("#openChatButton").text("Opening... ->");
         setTimeout(function(){$("#openChatButton").text("Open Chat");}, 1000);
         event.stopPropagation();
-    });
+    });*/
 
         
 
@@ -79,6 +83,8 @@ function LoadJQ(){
         href: "https://socialblade.com/css/jquery.nouislider.min.css"
     }).appendTo("head");
 
+
+    setTimeout(function() { onValueChange(); }, 4000);
 }
 
 
@@ -95,23 +101,23 @@ function addCustomHMTL(data){
         
     + "<div class='dataDiv'></div>"
     + "<div class='dataDiv'><div class='dataPartDiv'><p class='dataTex'>Rating:</p><select class='dataFieldNum' id='ratingDropDown'>"
-    + "<option value='0' selected='selected'>Not Rated Yet</option>"
-    + "<option value='1'>Useless / Botted / Expensive</option>"
-    + "<option value='2'>Page was Overused</option>"
-    + "<option value='3'>Watching Page</option>"
-    + "<option value='4'>Needs More Testing</option>"
+    + "<option value='0' selected='selected'>Watching Page</option>"
+    + "<option value='1'>Waiting For Reply</option>"
+    + "<option value='2'>Useless, Dont Use</option>"
+    + "<option value='3'>Shitty, Cheap</option>"
+    + "<option value='4'>Decent, Expensive</option>"
     + "<option value='5'>Breaks About Even</option>"
     + "<option value='6'>Good First Posts</option>"
-    + "<option value='7'>Perfect, Use Often</option></select></div>"
+    + "<option value='7'>Perfect</option></select></div>"
     + "<div class='dataPartDiv'><p class='dataTex'>Views on Page:</p><input class='dataFieldNum' type='number' id='viewsTextBox'></div>"
     + "<div class='dataPartDiv'><p class='dataTex'>Sales per Post:</p><input class='dataFieldNum' type='number' id='salesTextBox'></div>"
     + "<div class='dataPartDiv'><p class='dataTex'>Cost per 12h:</p><input class='dataFieldNum' type='number' id='costPPTextBox'></div>"
-    + "<button class='onPageButton' id='updateInfluencerButton'>Update</button></div>"
+    + "</div>"
 
 	
     + "<div class='dataDiv'>"
-    + "<div class='dataDiv'><p id='engagementLabel' style='line-height: 30px; font-size: 30px; display: block; margin: 0 auto; text-align: center;'></p>"
-    + "<button class='onPageButton' id='openChatButton'> Open Chat </button></div>"
+    + "<div class='dataDiv'><p id='engagementLabel' style='line-height: 30px; font-size: 30px; display: block; margin: 0 auto; text-align: center;'>Loading ...</p>"
+    // + "<button class='onPageButton' id='openChatButton'> Open Chat </button></div>"
     + "<div id='sbDiv'></div>"
     + "</div>"    
 
@@ -142,7 +148,7 @@ ipcRenderer.on('editEngagement', (evt, data) => {
 })
 
 ipcRenderer.on('triggerUpdate', (evt, data) => {
-    setTimeout(function() { $("#updateInfluencerButton").trigger("click"); }, 3000);
+    onValueChange();
 })
 
 
