@@ -220,9 +220,13 @@ onload = () => {
 
         var sortedKeys = Object.keys(window.influencerData).sort(function(a,b){
           if(window.influencerData[b].rating == window.influencerData[a].rating){
-            return parseInt(window.influencerData[b].followerCount) - parseInt(window.influencerData[a].followerCount);
+            var aF = parseInt(window.influencerData[a].followerCount);
+            var bF = parseInt(window.influencerData[b].followerCount);
+            if(isNaN(aF)){return 1;}
+            if(isNaN(bF)){return -1;}
+            return bF - aF;
           }else{
-            return window.influencerData[b].rating-window.influencerData[a].rating;
+            return window.influencerData[b].rating - window.influencerData[a].rating;
           }
         })
 
